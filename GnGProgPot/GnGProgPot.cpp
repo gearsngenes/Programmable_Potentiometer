@@ -1,16 +1,15 @@
 #include "GnGProgPot.h"
 
-GnGProgPot::GnGProgPot(int wiper_rec_pin, float VH_Value) : Adafruit_DS3502()
+GnGProgPot::GnGProgPot(uint8_t i2c_addr, float VH_Value) : Adafruit_DS3502()
 {
-  wiperRecPin = wiper_rec_pin;
+  i2c_Address = i2c_addr;
   vH = VH_Value;
 }
 void GnGProgPot:: Setup()
 {
   Serial.println("Adafruit DS3502 Test");
-  pinMode(wiperRecPin, INPUT);
 
-  if (!(begin())) {
+  if (!(begin(i2c_Address ))) {
     Serial.println("Couldn't find DS3502 chip");
     while (1);
   }
@@ -20,12 +19,4 @@ void GnGProgPot:: Setup()
 void GnGProgPot::  setVH (float newVH)
 {
   vH = newVH;
-}
-float GnGProgPot::getWiperValueinVolts()
-{
-  float wiper_value = analogRead(wiperRecPin);
-  wiper_value *= vH;
-  wiper_value /= 1024;//Res;
-  return wiper_value;
-
 }

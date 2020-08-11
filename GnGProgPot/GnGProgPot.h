@@ -7,13 +7,12 @@
 class GnGProgPot : public Adafruit_DS3502
 {
   public:
-    GnGProgPot(int wiper_rec_pin, float VH_Value = 3.3);
-    int wiperRecPin;
+    GnGProgPot(uint8_t i2c_addr=0x28, float VH_Value = 3.3);
     void Setup();
-    float getWiperValueinVolts();
     void setVH (float newVH);
   protected:
     float vH;
+    uint8_t i2c_Address;
 };
 
 #endif
